@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">YinYang</string>
+    <string name="app_name">Yin and Yang</string>
+    <string name="facebook_app_id">1594019550812269</string>    
 </resources>
