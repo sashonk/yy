@@ -1,0 +1,149 @@
+yes=yes
+no=no
+yin=Yin
+yang=Yang
+game = play
+close=close
+settings = settings
+rules = rules
+exit = exit
+back = back
+lang= english
+accept = accept
+cancel = cancel
+purchase= purchase
+language=language
+about=Yin and Yang
+restart=restart
+next=next
+youWin=[Complete!]
+newPersonalBest=New personal best
+steps=steps
+stepCount1={0} step
+stepCount2={0} steps
+best=best {0}
+music=music
+sound=sound
+defaults=defaults
+resume=continue game
+undo=undo
+level=level
+credits=credit
+do_you_mind_rate=[Do you mind
+rating the app?]
+yes_rate=Rate
+no_rate=Quit
+propose_walkthrough=[Got stuck?]
+education=[Your goal is 
+to combine all 
+white parts with 
+black parts]
+tips=tip
+sure_want_use_tips=[Turn on 
+walkthrough?]
+forward=forward 
+rulesText = [Your task is to combine all white parts Yang with all black parts Yin. Black elements Yin stand still, only white elements Yang can be moved]
+rulesText2 = [There are also other elements on the game field. They are all parts of the Chinese doctrine of Yin and Yang. Good luck!]
+aboutText = [Chinese doctrine of Yin and Yang is more than a thousand years. We all know that the black and white parts symbolize light and dark beginning of the universe. For a thousand years the sages of all nations and nationalities are trying to combine them for the sake of world harmony. And, nevertheless, there is no such person who managed to do this.]
+aboutText2=[You, dear gamer, have a an opportunity to be the first who got such a combination. But, as expected, in Chinese philosophy, you will need to combine all the figures at the same time - the harmony is supposed to occur simultaneously in all corners of your field - the Earth.]
+education_hand=[Swipe to move]
+education_step_cancel=[Push to cancel]
+education_walkthrough=[In this mode
+the game makes
+steps for you.
+At any moment 
+you can continue
+playing by your own]
+level_pack_cost=Level pack   
+walkthrough_cost = [Walkthrough]
+walkthrough_desc=[Step-by-step walkthrogh feature 
+lets you watch how 
+hard levels can be 
+done. As soon as the solution 
+is clear, simply turn to normal mode
+and complete level by your own]
+end_of_game=[Not again! That is not 
+for you - the master of Yin Yang world.
+You have completed all levels. 
+We kneel down in front of your
+outstanding experience.
+We will be happy if you
+join us on facebook]
+end_of_light=[You have completed The Bright Side!
+What I can tell you? Well, you are a little genius! 
+I know it was hard. Relax a little, take a cup of 
+coffee with cookies or, maybe, you are ready to 
+deal with The Dark Side?]  
+credits2=[programming - 
+Alexander Kisorzhevsky]
+credits1=[texts, ideas - Svetlana Ceban]
+credits3=[music - Ivan Chew]
+credits4=[levels - Alexander Kisorzhevsky,
+Svetlana Ceban, Den Skripunov]
+credits5=[testing - Lidia Kisorzhevsky,
+Alexey Fedortsov, Evgeniy Zenkin, 
+Danil Raimov, Anna Burdina]
+i_want_share=I have recently been playing Yin & Yang puzzle. It is now available in Google Play!
+share=Share
+yin_puzzle=Yin & Yang puzzle
+like=Like
+wait=[Please, wait...]
+tweet=Tweet
+watch_video_ad=[Watch 
+video
+adv]
+or=[To open walkthrough, 
+choose one of the following]
+video=[watch video]
+levels_of_light=[The Bright side]
+levels_of_dark=[The Dark side]
+must_do_light=[To open The Dark Side complete 
+levels of The Bright Side]
+joinus=[]
+shopping=[store]
+purchase_more_yangs=[Not enough Yangs
+Get more?]
+novid=[No video available]
+legend=[Times are changing.
+But human history remains with us forever.
+It happened thousands of years ago in the
+crannies of the world. Then there lived 
+a boy named Yinyang. He grew up in the shadow 
+of spreading trees, tending cattle and watch the sunset.
+And when time to be a young man came,
+Yinyang went deep into the mountains to the most
+wise warrior, who saved his village from 
+the attack of the black demons many years ago. 
+There were rumors that he won them alone, with only
+sword in hand. To master the art of battle
+Yinyang went to the brave old man, who was an old 
+man by that time. The old man taught the boy for three years, three months and three days.
+And then enemies came, and started to destroy 
+everything in a mountain village, kill women
+and children, and men who dared to raise against the
+their weapons, brutally executed.
+Yinyang heard the thunder of the terrible massacre, 
+grabbed the sword of his teacher, and rushed to help
+the inhabitants of his native village.]
+legend2=[He fought with the enemies for
+seven nights without sleep and rest. 
+Killed hundreds but in their place came thousands.
+And on the seventh day swarthy giant stood against 
+the warrior Yinyang. They fought for seven years
+Finally Yinyang looked into his face and froze in stupor.
+He saw that all this time he fought against ... himself.
+And every soldier of the enemy's army had his face.
+So, that made this troop invincible.
+And Yinyang realized how he could overcome this troop.
+He drew his sword against himself and cut his body 
+in half. Hordes of demons suddenly vanished into the 
+air and Yinyang's body turned into parts. One part was 
+white. It soared into the heavens. The second part was 
+black. It sank into the ground. And ever since people
+try to reunite them, revive the ancient knight
+who guarded our world. 
+
+   Eventually, a man came...]
+dark_cost=[Open Dark Side?]   
+already_purchased=[You have already
+purchased this item]
