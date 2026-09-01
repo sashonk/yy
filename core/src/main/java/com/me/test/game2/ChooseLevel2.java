@@ -1,10 +1,5 @@
 package com.me.test.game2;
 
-import java.io.ObjectInputStream;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.TreeMap;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,26 +8,19 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.me.test.Feature;
-import com.me.test.IActivityRequestHandler.GetPricesCallback;
-import com.me.test.IActivityRequestHandler.PurchaseCallback;
-import com.me.test.L10nButton;
-import com.me.test.L10nLabel;
+import com.badlogic.gdx.utils.Align;
 import com.me.test.Pair;
 import com.me.test.Sounds;
 import com.me.test.TestGame;
 import com.me.test.Util;
+
+import java.io.ObjectInputStream;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ChooseLevel2 extends BaseMenuScreen{
 	static final int lastActive = 111;
@@ -247,8 +235,7 @@ outer:		for(int i = 0; i<height; i++){
 					break outer;
 				}
 				
-				 boolean isDone = prefs.getBoolean("is_done_"+c, false);
-				 final boolean inactive = c>lastActive;
+				 final boolean inactive = false;//c>lastActive;
 				 
 				 Integer difficulty = diffMap.get(c);
 				 String choiceStyle;
@@ -276,7 +263,7 @@ outer:		for(int i = 0; i<height; i++){
 				 ImageButton tb = new ImageButton(getGame().getManager().getSkin(), choiceStyle);	
 				 tb.setName(String.format("image-%d-%d", c, System.currentTimeMillis()));
 				 if(inactive){
-					 tb.setDisabled(true);
+					// tb.setDisabled(true);
 				 }
 				 
 	
@@ -343,7 +330,7 @@ outer:		for(int i = 0; i<height; i++){
 				TextButton tb = new TextButton(Integer.toString( c), getGame().getManager().getSkin(), "choice");
 				 tb.setName(String.format("button-%d-%d", c, System.currentTimeMillis()));
 				 if(inactive){
-					 tb.setDisabled(true);
+					// tb.setDisabled(true);
 				 }
 
 	
@@ -480,7 +467,7 @@ outer:		for(int i = 0; i<height; i++){
 							 
 							 boolean prevDone = prefs.getBoolean("is_done_"+(levNum-1), false);
 							 if(!prevDone && levNum>61){
-								 tb.setDisabled(true);
+							// tb.setDisabled(true);
 							 }
 							 else{
 								 tb.setDisabled(false);
@@ -504,7 +491,7 @@ outer:		for(int i = 0; i<height; i++){
 
 							 boolean prevDone = prefs.getBoolean("is_done_"+(levNum-1), false);
 							 if(!prevDone && levNum>61){
-								 tb.setDisabled(true);
+								 //tb.setDisabled(true);
 							 }
 							 else{
 								 tb.setDisabled(false);

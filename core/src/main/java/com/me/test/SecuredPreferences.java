@@ -167,7 +167,7 @@ public class SecuredPreferences implements Preferences{
 	}
 
 	@Override
-	public void put(Map<String, ?> vals) {
+	public Preferences put(Map<String, ?> vals) {
 		
 		for (Entry<String, ?> val : vals.entrySet()) {
 			if (val.getValue() instanceof Boolean) putBoolean(val.getKey(), (Boolean)val.getValue());
@@ -176,47 +176,52 @@ public class SecuredPreferences implements Preferences{
 			if (val.getValue() instanceof String) putString(val.getKey(), (String)val.getValue());
 			if (val.getValue() instanceof Float) putFloat(val.getKey(), (Float)val.getValue());
 		}
+		return this;
 	}
 
 	@Override
-	public void putBoolean(String key, boolean val) {
+	public Preferences putBoolean(String key, boolean val) {
 		String tkey = getTransformedValue(key);
 		String tval = getTransformedValue(Boolean.toString(val));
 		
 		prefs.putString(tkey, tval);
+		return this;
 	}
 
 	@Override
-	public void putFloat(String key, float val) {
+	public Preferences putFloat(String key, float val) {
 		String tkey = getTransformedValue(key);
 		String tval = getTransformedValue(Float.toString(val));
 		
 		prefs.putString(tkey, tval);
+		return this;
 	}
 
 	@Override
-	public void putInteger(String key, int val) {
+	public Preferences putInteger(String key, int val) {
 		String tkey = getTransformedValue(key);
 		String tval = getTransformedValue(Integer.toString(val));
 		
 		prefs.putString(tkey, tval);
+		return this;
 	}
 
 	@Override
-	public void putLong(String key, long val) {
+	public Preferences putLong(String key, long val) {
 		String tkey = getTransformedValue(key);
 		String tval = getTransformedValue(Long.toString(val));
 		
 		prefs.putString(tkey, tval);
+		return this;
 	}
 
 	@Override
-	public void putString(String key, String val) {
+	public Preferences putString(String key, String val) {
 		String tkey = getTransformedValue(key);
 		String tval = getTransformedValue(val);
 		
 		prefs.putString(tkey, tval);
-		
+		return this;
 	}
 
 	@Override
