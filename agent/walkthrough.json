@@ -1,19 +1,5 @@
 ﻿{
     "levels":  {
-                   "45":  {
-                              "moves":  [
-                                            "left",
-                                            "right",
-                                            "down",
-                                            "up",
-                                            "right",
-                                            "down",
-                                            "right",
-                                            "right"
-                                        ],
-                              "steps":  8,
-                              "updated":  "2026-09-19"
-                          },
                    "3":  {
                              "moves":  [
                                            "left",
@@ -43,6 +29,19 @@
                               "steps":  5,
                               "updated":  "2026-09-19"
                           },
+                   "2":  {
+                             "moves":  [
+                                           "left",
+                                           "up",
+                                           "right",
+                                           "up",
+                                           "right",
+                                           "up",
+                                           "up"
+                                       ],
+                             "steps":  7,
+                             "updated":  "2026-09-19"
+                         },
                    "29":  {
                               "moves":  [
                                             "left",
@@ -68,19 +67,20 @@
                              "steps":  7,
                              "updated":  "2026-09-19"
                          },
-                   "2":  {
-                             "moves":  [
-                                           "left",
-                                           "up",
-                                           "right",
-                                           "up",
-                                           "right",
-                                           "up",
-                                           "up"
-                                       ],
-                             "steps":  7,
-                             "updated":  "2026-09-19"
-                         },
+                   "45":  {
+                              "moves":  [
+                                            "left",
+                                            "right",
+                                            "down",
+                                            "up",
+                                            "right",
+                                            "down",
+                                            "right",
+                                            "right"
+                                        ],
+                              "steps":  8,
+                              "updated":  "2026-09-19"
+                          },
                    "1":  {
                              "moves":  [
                                            "right",
@@ -92,19 +92,6 @@
                              "steps":  5,
                              "updated":  "2026-09-19"
                          },
-                   "21":  {
-                              "moves":  [
-                                            "up",
-                                            "right",
-                                            "down",
-                                            "left",
-                                            "right",
-                                            "up",
-                                            "left"
-                                        ],
-                              "steps":  7,
-                              "updated":  "2026-09-19"
-                          },
                    "4":  {
                              "moves":  [
                                            "down",
@@ -118,6 +105,19 @@
                              "steps":  7,
                              "updated":  "2026-09-19"
                          },
+                   "13":  {
+                              "moves":  [
+                                            "left",
+                                            "down",
+                                            "down",
+                                            "down",
+                                            "right",
+                                            "left",
+                                            "up"
+                                        ],
+                              "steps":  7,
+                              "updated":  "2026-09-19"
+                          },
                    "33":  {
                               "moves":  [
                                             "down",
@@ -136,15 +136,15 @@
                               "steps":  12,
                               "updated":  "2026-09-19"
                           },
-                   "13":  {
+                   "21":  {
                               "moves":  [
-                                            "left",
-                                            "down",
-                                            "down",
-                                            "down",
+                                            "up",
                                             "right",
+                                            "down",
                                             "left",
-                                            "up"
+                                            "right",
+                                            "up",
+                                            "left"
                                         ],
                               "steps":  7,
                               "updated":  "2026-09-19"
