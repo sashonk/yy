@@ -19,6 +19,8 @@ import javax.crypto.SecretKey;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.me.test.game2.ChooseLevel;
 import com.me.test.game2.ChooseLevel2;
 import com.me.test.game2.ChooseList;
@@ -248,6 +250,56 @@ public class TestGame extends Game implements IGame{
 		setScreen(splash);
 	}
 
+	public String agentStateJson(){
+		StringBuilder sb = new StringBuilder();
+		sb.append('{');
+		Screen s = getScreen();
+		String name = "none";
+		if(s instanceof BaseScreen){
+			name = ((BaseScreen) s).getName();
+		}
+		else if(s != null){
+			name = s.getClass().getSimpleName();
+		}
+		sb.append("\"screen\":");
+		AgentJson.appendQuoted(sb, name);
+		if(s instanceof Game2){
+			sb.append(',');
+			((Game2) s).appendAgentFieldJson(sb);
+		}
+		else if(s instanceof BaseScreen){
+			sb.append(",\"ui\":");
+			AgentJson.appendNamedActors(sb, ((BaseScreen) s).getStage().getRoot());
+		}
+		sb.append('}');
+		return sb.toString();
+	}
+
+	public void agentMove(String dir){
+		Screen s = getScreen();
+		if(!(s instanceof Game2)){
+			throw new IllegalStateException("not on game2 screen");
+		}
+		((Game2) s).firePlayerMove(dir);
+	}
+
+	public void agentClick(String actorName){
+		Screen s = getScreen();
+		if(!(s instanceof BaseScreen)){
+			throw new IllegalStateException("no stage");
+		}
+		Actor actor = ((BaseScreen) s).getStage().getRoot().findActor(actorName);
+		if(actor == null){
+			throw new IllegalArgumentException("no actor: " + actorName);
+		}
+		AgentJson.clickActor(actor);
+	}
+
+	public void agentStartLevel(int level){
+		Game2 g = getGame2Screen();
+		setScreen(g);
+		g.start(level);
+	}
 
 	@Override
 	public void dispose () {

@@ -10,3 +10,11 @@ buildNumber.properties
 *.class
 .idea
 
+# agent run artifacts
+agent/last_run.log
+agent/solve_out*.txt
+game*.log
+.env_check.txt
+.term_test.txt
+.vscode/
+

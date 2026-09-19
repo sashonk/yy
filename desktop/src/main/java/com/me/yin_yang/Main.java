@@ -13,7 +13,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.utils.Base64Coder;
 import com.me.test.Feature;
 import com.me.test.IActivityRequestHandler;
-import com.me.test.TestGame;
 import com.me.test.Util;
 
 public class Main implements IActivityRequestHandler{
@@ -23,6 +22,9 @@ public class Main implements IActivityRequestHandler{
 				if("dev".equals(arg)){
 					dev = true;
 				}
+				else if("agent".equals(arg)){
+					agent = true;
+				}
 				else if("clear".equals(arg)){
 					clear = true;
 				}
@@ -31,6 +33,7 @@ public class Main implements IActivityRequestHandler{
 	}
 	
 	private boolean dev;
+	private boolean agent;
 	private boolean clear;
 	
 	public static void main(String[] args) {
@@ -45,7 +48,7 @@ public class Main implements IActivityRequestHandler{
 		cfg.width = 1024;
 		cfg.height = 768;
 		
-		new LwjglApplication(new TestGame(new Main(args)), cfg);
+		new LwjglApplication(new DesktopTestGame(new Main(args)), cfg);
 	}
 	
 	
@@ -239,6 +242,10 @@ public class Main implements IActivityRequestHandler{
 	@Override
 	public boolean dev() {
 		return dev;
+	}
+
+	public boolean agent() {
+		return agent;
 	}
 
 

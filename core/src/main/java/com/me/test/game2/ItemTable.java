@@ -26,6 +26,48 @@ public class ItemTable {
 		
 	}
 	
+	public int getWidth(){
+		return _width;
+	}
+
+	public int getHeight(){
+		return _height;
+	}
+
+	public void appendOccupiedCellsJson(StringBuilder sb){
+		sb.append('[');
+		boolean first = true;
+		for(int x = 0; x < _width; x++){
+			for(int y = 0; y < _height; y++){
+				BaseItem item = items[x][y];
+				BaseItem spot = spots[x][y];
+				if(item == null && spot == null){
+					continue;
+				}
+				if(!first){
+					sb.append(',');
+				}
+				first = false;
+				sb.append("{\"x\":").append(x).append(",\"y\":").append(y);
+				sb.append(",\"item\":");
+				appendItemType(sb, item);
+				sb.append(",\"spot\":");
+				appendItemType(sb, spot);
+				sb.append('}');
+			}
+		}
+		sb.append(']');
+	}
+
+	private static void appendItemType(StringBuilder sb, BaseItem item){
+		if(item == null){
+			sb.append("null");
+		}
+		else{
+			sb.append('"').append(item.getClass().getSimpleName()).append('"');
+		}
+	}
+
 	public boolean hits(int x, int y){
 		return x >= 0 && x<items.length && y>=0 && y<items[0].length;
 	}

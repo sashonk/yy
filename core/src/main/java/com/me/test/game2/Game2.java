@@ -351,6 +351,7 @@ public class Game2 extends ItemContainer {
 
 
 		back = new ImageButton(skin, "pause");
+		back.setName("pause");
 		back.setPosition(20, 20);
 		back.setSize(60, 80);
 		back.addListener(new ClickListener(){
@@ -376,6 +377,7 @@ public class Game2 extends ItemContainer {
 
 		//undo = new L10nButton(g.getL10n(), "undo", getGame().getManager().getSkin(), "game");
 		undo = new ImageButton(skin, "replay");
+		undo.setName("replay");
 		undo.setSize(80,80);
 		
 		uiLayer.addActor(undo);
@@ -386,6 +388,7 @@ public class Game2 extends ItemContainer {
 		tipsTable.defaults().width(100).height(70).pad(10);
 		//nextTipButton = new L10nButton(g.getL10n(), "forward", getGame().getManager().getSkin(), "game");
 		nextTipButton = new ImageButton( skin,"forward");
+		nextTipButton.setName("forward");
 		nextTipButton.addListener(new ClickListener(){
 			public void clicked (InputEvent event, float x, float y) {
 				if(nextTipButton.isDisabled()){
@@ -670,6 +673,7 @@ public class Game2 extends ItemContainer {
 							
 							float mul = 1.2f;
 							Button list = new ImageButton(skin, "list");
+							list.setName("winList");
 							winWindow.add(list).width(50*mul).height(40*mul).pad(pad).padLeft(sidePad).padRight(sidePad);
 							list.addListener(new ClickListener(){
 								public void clicked (InputEvent event, float x, float y) {
@@ -688,6 +692,7 @@ public class Game2 extends ItemContainer {
 							
 							//TextButton resetBtn = new L10nButton(g.getL10n(),"restart", skin, "reset");
 							Button resetBtn = new ImageButton(skin, "replay");
+							resetBtn.setName("winReplay");
 							winWindow.add(resetBtn).width(45*mul).height(45*mul).pad(pad).padLeft(sidePad).padRight(sidePad);
 							resetBtn.addListener(new ClickListener(){
 								public void clicked (InputEvent event, float x, float y) {
@@ -707,6 +712,7 @@ public class Game2 extends ItemContainer {
 							
 						//	TextButton nextBtn = new L10nButton(g.getL10n(), "next", skin, "reset");
 							Button nextBtn = new ImageButton(skin, "forward");
+							nextBtn.setName("winNext");
 							winWindow.add(nextBtn).width(50*mul).height(40*mul).pad(pad).padLeft(sidePad).padRight(sidePad);
 							nextBtn.addListener(new ClickListener(){
 								public void clicked (InputEvent event, float x, float y) {
@@ -1643,6 +1649,36 @@ public class Game2 extends ItemContainer {
 		GestureController gc = new GestureController();
 
 		return gc;
+	}
+
+	public boolean isBusy(){
+		for(Yang ball : getAll(Yang.class)){
+			for(Action a : ball.getActions()){
+				if(a instanceof com.badlogic.gdx.scenes.scene2d.actions.MoveToAction){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public void firePlayerMove(String dir){
+		Direction.valueOf(dir);
+		uiLayer.fire(new ButtonEvent(dir, Source.PLAYER));
+	}
+
+	public void appendAgentFieldJson(StringBuilder sb){
+		sb.append("\"level\":").append(level);
+		sb.append(",\"steps\":").append(stepCount);
+		sb.append(",\"won\":").append(uiLayer.findActor("winWindow") != null);
+		sb.append(",\"busy\":").append(isBusy());
+		sb.append(",\"rotten\":").append(getMeta() != null && getMeta().is_rotten());
+		sb.append(",\"width\":").append(table.getWidth());
+		sb.append(",\"height\":").append(table.getHeight());
+		sb.append(",\"cells\":");
+		table.appendOccupiedCellsJson(sb);
+		sb.append(",\"ui\":");
+		com.me.test.AgentJson.appendNamedActors(sb, uiLayer);
 	}
 	
 	void checkConsistent(){

@@ -202,6 +202,11 @@ public class SubMenu extends BaseScreen {
 		list.setPosition(BAR_CELL_SPACE, BAR_CELL_SPACE);
 		
 		
+		play.setName("submenuPlay");
+		replay.setName("submenuReplay");
+		walkthrough.setName("submenuWalkthrough");
+		list.setName("submenuList");
+		
 		play.addListener(new ClickListener(){
 			public void clicked (InputEvent event, float x, float y) {
 				getGame().setScreen(getGame().getGame2Screen());
