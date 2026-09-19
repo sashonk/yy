@@ -78,8 +78,3 @@ mvn integration-test -Pdesktop
 - `com.me.test.game2.item.factory` — фабрики элементов поля (камень, вода,
   металл, зеркало, стены, ян)
 - `com.brashmonkey.spriter`, `aurelienribon.bodyeditor` — вендоренные библиотеки
-
-## История и статус
-
-Активная разработка шла в 2016–2018 гг.; нереализованные идеи остались в
-[TODO.txt](TODO.txt). Лицензия не указана.
