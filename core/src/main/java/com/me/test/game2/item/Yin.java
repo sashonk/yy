@@ -59,7 +59,6 @@ public class Yin extends SpriterItem{
 				String anim = null;
 				int speed = 15;
 				if(p <= 50 || !"blink".equals(prevAnim)){
-					System.out.println("yin blink");
 					//speed = 100;
 					anim = "blink";
 				}

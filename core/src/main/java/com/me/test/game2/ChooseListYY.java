@@ -11,6 +11,10 @@ import com.me.test.*;
 public class ChooseListYY  extends BaseMenuScreen{
 	Label ownedYangsLabel;
 	
+	/** set when the player tried to buy the dark side but lacked yangs;
+	 * after buying yangs the deal completes automatically (TODO.txt item 2) */
+	boolean pendingDarkPurchase;
+	
 	public void show(){
 		super.show();
 		update();
@@ -19,8 +23,40 @@ public class ChooseListYY  extends BaseMenuScreen{
 	@Override
 	public void update() {
 		ownedYangsLabel.setText(Integer.toString(getGame().getSession().getOwnerYangs()));
-	
 		
+		if(!pendingDarkPurchase){
+			return;
+		}
+		
+		Preferences prefs = getGame().getPreferences();
+		
+		// already unlocked (e.g. bought elsewhere) - just go there
+		if(prefs.getBoolean(Values.levelPack, false)){
+			pendingDarkPurchase = false;
+			goDark();
+			return;
+		}
+		
+		int owned = getGame().getSession().getOwnerYangs();
+		if(owned >= Values.levelPackYins){
+			pendingDarkPurchase = false;
+			int result = owned - Values.levelPackYins;
+			getGame().getSession().setOwnedYangs(result);
+			prefs.putInteger(Values.yangs, result);
+			prefs.putBoolean(Values.levelPack, true);
+			prefs.flush();
+			goDark();
+		}
+	}
+	
+	/** switch to the dark levels screen after a successful purchase */
+	void goDark(){
+		getStage().addAction(Actions.sequence(Actions.delay(1, Actions.run(new Runnable() {
+			@Override
+			public void run() {
+				getGame().setScreen(getGame().getChooseLevelScreen2());
+			}
+		}))));
 	}
 	
 
@@ -137,6 +173,9 @@ public class ChooseListYY  extends BaseMenuScreen{
 								
 							}
 							else{
+								// remember intent: after buying yangs in the shop,
+								// update() completes the purchase automatically
+								ChooseListYY.this.pendingDarkPurchase = true;
 								Dialog moreYangs =  Scripts.moreYangsDlg(null, ChooseListYY.this);
 								moreYangs.show(getStage());
 							}

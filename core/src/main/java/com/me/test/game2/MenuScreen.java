@@ -335,8 +335,7 @@ public class MenuScreen extends BaseMenuScreen{
 								}
 								
 								diffMap.put(level, difficulty);
-								System.out.println("level "+level+", diff "+difficulty);
-								
+
 								
 								
 							}catch(Exception e){
@@ -402,7 +401,7 @@ public class MenuScreen extends BaseMenuScreen{
 					}
 					sb.append("]}");
 					
-					System.out.println(sb);
+					Gdx.app.debug(getName(), sb.toString());
 				}
 			});
 		}
@@ -450,11 +449,9 @@ public class MenuScreen extends BaseMenuScreen{
 						backing.rotateBy(15);
 						
 						//backing.r
-						System.out.println("rotate");
 					}
 					else if(Gdx.input.isKeyPressed(Keys.E)){
 						backing.rotateBy(-15);
-						System.out.println("rotate");
 					}
 				}
 			});

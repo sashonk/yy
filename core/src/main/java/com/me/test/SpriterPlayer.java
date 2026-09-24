@@ -19,10 +19,6 @@ public class SpriterPlayer extends Actor{
 		
 		Rectangle bb =  _player.getBoudingRectangle(null);
 		
-		System.out.println(new StringBuilder().append(bb.left).append(' ').append(bb.right).append(' ').append(bb.top).append(' ').append(bb.bottom));
-		System.out.println(_player.getX()+" "+_player.getY());
-		
-		
 		//this.setWidth(width);
 		//this.setWidth(width);
 		this.setWidth(bb.right-bb.left);

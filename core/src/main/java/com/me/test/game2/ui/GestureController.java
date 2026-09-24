@@ -46,7 +46,6 @@ public class GestureController extends Group implements Controller{
 				
 				flag = false;
 				
-				System.out.println(deltaX+" "+deltaY);
 				float modx = Math.abs(deltaX);
 				float mody =  Math.abs(deltaY);
 				

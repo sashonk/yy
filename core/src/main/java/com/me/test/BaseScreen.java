@@ -74,7 +74,6 @@ public abstract class BaseScreen implements Screen{
 		
 		//logger.log();
 		if(Gdx.input.isKeyPressed(Keys.S) /*|| TestGame.demoMode*/ && (count % 2 == 0)){
-			System.out.println(Gdx.app.getJavaHeap()); 
 			
 			ScreenShot worker = new ScreenShot();
 			worker.prepare();			// grab screenshot

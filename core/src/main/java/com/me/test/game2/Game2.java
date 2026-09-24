@@ -1227,7 +1227,7 @@ public class Game2 extends ItemContainer {
 				
 				@Override
 				public void run() {
-					System.out.println(item.getClass().getName()+" removed");
+					Gdx.app.debug("Game2", item.getClass().getName() + " removed");
 					world.destroyBody(item.getBody());
 					item.getBody().setUserData(null);
 					item.remove();
@@ -1381,7 +1381,7 @@ public class Game2 extends ItemContainer {
 								
 
 								
-								System.out.println("ALL REMOVED, invoke callback");
+								Gdx.app.debug("Game2", "ALL REMOVED, invoke callback");
 								
 							//	reset.setDisabled(false);
 								
@@ -1435,7 +1435,7 @@ public class Game2 extends ItemContainer {
 				
 				@Override
 				public void run() {
-					System.out.println("ALL REMOVED, invoke callback");
+					Gdx.app.debug("Game2", "ALL REMOVED, invoke callback");
 					
 				//	reset.setDisabled(false);
 					
