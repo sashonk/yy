@@ -21,10 +21,14 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -936,7 +940,7 @@ public class Game2 extends ItemContainer {
 		RayHandler.setGammaCorrection(true);
 		RayHandler.useDiffuseLight(true);
 		rayHandler = new RayHandler(world);
-		rayHandler.setCulling(false);
+		rayHandler.setCulling(true);
 		
 		//final ConeLight cone = new ConeLight(rayHandler, 32, Color.WHITE, 700, 0,700, coneDirection, 60);
 		//PointLight light = new PointLight(rayHandler, 32, Color.WHITE, 300, 0,0);
@@ -972,20 +976,58 @@ public class Game2 extends ItemContainer {
 	PointLight light ;
 	boolean lights;
 	
+	// cached refs to the level-36 ui lights; avoids findActor() tree walks every frame
+	LightActor la, lr, lc, ll;
+	
+	/** true while abandoned items are flying away with box2d physics */
+	boolean physicsActive;
+	
+	void stepPhysics(){
+		if(!physicsActive){
+			return;
+		}
+		
+		float delta = Gdx.graphics.getDeltaTime();
+		// clamp the step so lag spikes don't explode box2d
+		delta = Math.min(delta, 1/30f);
+		world.step(delta, 4, 3);
+		
+		if(world.getBodyCount()==0){
+			physicsActive = false;
+		}
+	}
+
 	@Override
 	public void render (float delta){
-		
-		if(lights){
-			uiLayer.setVisible(false);
-			
-			//LightActor a = uiLayer.findActor("la");
-
-			
-		}
 	
-		
-		super.render(delta);		
-		world.step(Gdx.graphics.getDeltaTime(), 5, 5);
+		// on the "lights" level the ui is drawn in a second, lightweight pass
+		// on top of the light mask instead of drawing the whole scene twice
+		if(!lights){
+			super.render(delta);
+			stepPhysics();
+		}
+		else{
+			// pass 1: game field with ui hidden
+			uiLayer.setVisible(false);
+			stage.act();
+			Gdx.gl.glClearColor(0, 0, 0, 1);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			stage.draw();
+			stepPhysics();
+			
+			// light mask on top of the field
+			rayHandler.setCombinedMatrix((OrthographicCamera) getStage().getCamera());
+			rayHandler.updateAndRender();
+			
+			// pass 2: ui only
+			gameLayer.setVisible(false);
+			backgroundLayer.setVisible(false);
+			uiLayer.setVisible(true);
+			stage.draw();
+			
+			gameLayer.setVisible(true);
+			backgroundLayer.setVisible(true);
+		}
 		
 		for(int i = 0 ; i < uiLayer.getChildren().size; i++){
 			Actor a = uiLayer.getChildren().get(i);
@@ -1000,29 +1042,12 @@ public class Game2 extends ItemContainer {
 		
 	
 		if(lights){
-			LightActor r =uiLayer.findActor("lr");
-			LightActor c = uiLayer.findActor("lc");
-			LightActor l =uiLayer.findActor("ll");
-			
-			if(r!=null)
-				r.getLight().setActive(undo.isVisible());
-			if(l!=null)
-				l.getLight().setActive(back.isVisible());
-			if(c!=null)
-				c.getLight().setActive(tipsTable.isVisible());
-			
-			
-			rayHandler.setCombinedMatrix((OrthographicCamera) getStage().getCamera());
-			rayHandler.updateAndRender();
-			uiLayer.setVisible(true);
-			gameLayer.setVisible(false);
-			backgroundLayer.setVisible(false);
-			
-			
-	
-			stage.draw();
-			gameLayer.setVisible(true);
-			backgroundLayer.setVisible(true);
+			if(lr!=null && lr.hasParent())
+				lr.getLight().setActive(undo.isVisible());
+			if(ll!=null && ll.hasParent())
+				ll.getLight().setActive(back.isVisible());
+			if(lc!=null && lc.hasParent())
+				lc.getLight().setActive(tipsTable.isVisible());
 		}
 		
 		//System.out.println(light.getPosition());
@@ -1055,15 +1080,74 @@ public class Game2 extends ItemContainer {
 	World world;
 	public static float B2D_SCALE = 100f;
 
-	void fillBg(){
-		for(int i  = 0; i<40; i++){
-			for(int j  = 0; j<40; j++){
-				Image img = new Image(game.getManager().getAtlas().findRegion("back"));
-				backgroundLayer.addActor(img);
-				img.setBounds(i*BaseItem.ITEM_WIDTH, j*BaseItem.ITEM_HEIGHT, BaseItem.ITEM_WIDTH, BaseItem.ITEM_HEIGHT);
-				
+	/**
+	 * Single actor that tiles the "back" region over its bounds, drawing only
+	 * the tiles visible in the camera. Replaces the old fillBg() that created
+	 * 40x40=1600 Image actors (actor-tree walk + draw for every tile each frame).
+	 */
+	static class TiledBackground extends Actor{
+		final TextureRegion region;
+		final float tileWidth;
+		final float tileHeight;
+		
+		public TiledBackground(TextureRegion region, float tileWidth, float tileHeight){
+			this.region = region;
+			this.tileWidth = tileWidth;
+			this.tileHeight = tileHeight;
+		}
+		
+		@Override
+		public void draw(Batch batch, float parentAlpha){
+			Camera cam = getStage().getCamera();
+			
+			// camera window -> this actor's local coordinate space
+			float camLeft = cam.position.x - cam.viewportWidth/2;
+			float camBottom = cam.position.y - cam.viewportHeight/2;
+			
+			tmpCamMin.set(camLeft, camBottom);
+			stageToLocalCoordinates(tmpCamMin);
+			tmpCamMax.set(camLeft + cam.viewportWidth, camBottom + cam.viewportHeight);
+			stageToLocalCoordinates(tmpCamMax);
+			
+			// intersect with actor bounds (local space: 0..width, 0..height)
+			float startX = Math.max(0, tmpCamMin.x);
+			float startY = Math.max(0, tmpCamMin.y);
+			float endX = Math.min(getWidth(), tmpCamMax.x);
+			float endY = Math.min(getHeight(), tmpCamMax.y);
+			
+			if(endX <= startX || endY <= startY){
+				return;
+			}
+			
+			int col0 = (int)Math.floor(startX / tileWidth);
+			int col1 = (int)Math.ceil(endX / tileWidth);
+			int row0 = (int)Math.floor(startY / tileHeight);
+			int row1 = (int)Math.ceil(endY / tileHeight);
+			
+			Color color = getColor();
+			batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+			
+			float originY = getY() + row0 * tileHeight;
+			float px = getX() + col0 * tileWidth;
+			for(int col = col0; col < col1; col++){
+				float py = originY;
+				for(int row = row0; row < row1; row++){
+					batch.draw(region, px, py, tileWidth, tileHeight);
+					py += tileHeight;
+				}
+				px += tileWidth;
 			}
 		}
+	}
+	
+	static final Vector2 tmpCamMin = new Vector2();
+	static final Vector2 tmpCamMax = new Vector2();
+
+	void fillBg(){
+		TextureRegion back = game.getManager().getAtlas().findRegion("back");
+		TiledBackground bg = new TiledBackground(back, BaseItem.ITEM_WIDTH, BaseItem.ITEM_HEIGHT);
+		bg.setBounds(0, 0, 40*BaseItem.ITEM_WIDTH, 40*BaseItem.ITEM_HEIGHT);
+		backgroundLayer.addActor(bg);
 	}
 
 	 Action createAbandonSequence(){
@@ -1117,6 +1201,7 @@ public class Game2 extends ItemContainer {
 			
 			bdef.gravityScale = 2.5f;
 			Body body = world.createBody(bdef);
+			physicsActive = true;
 			
 			PolygonShape shape = new PolygonShape();
 			List<Float> ff = new LinkedList<Float>();
@@ -1494,6 +1579,14 @@ public class Game2 extends ItemContainer {
 		
 		lights = level == 36 ;
 		
+		if(!lights){
+			// drop cached light refs from a previous level-36 session
+			la = null;
+			ll = null;
+			lc = null;
+			lr = null;
+		}
+		
 		if(lights){
 	
 			
@@ -1514,6 +1607,12 @@ public class Game2 extends ItemContainer {
 			lr.setName("lr");
 			lr.setPosition(undo.getX()+50, undo.getY());
 			lc.setPosition(tipsTable.getX()+50, tipsTable.getY());;
+
+			// cache refs so render() doesn't walk the actor tree with findActor()
+			this.la = la;
+			this.ll = ll;
+			this.lc = lc;
+			this.lr = lr;
 
 			uiLayer.addActor(la);
 			uiLayer.addActor(ll);

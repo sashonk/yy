@@ -1,5 +1,58 @@
 ﻿{
     "levels":  {
+                   "36":  {
+                              "moves":  [
+                                            "right",
+                                            "right",
+                                            "right",
+                                            "down",
+                                            "down",
+                                            "down",
+                                            "right",
+                                            "right",
+                                            "up",
+                                            "up",
+                                            "up",
+                                            "right",
+                                            "right",
+                                            "down",
+                                            "right",
+                                            "right",
+                                            "up",
+                                            "right",
+                                            "right",
+                                            "down",
+                                            "down",
+                                            "right",
+                                            "right",
+                                            "down",
+                                            "down",
+                                            "right",
+                                            "right",
+                                            "down",
+                                            "down",
+                                            "down",
+                                            "down",
+                                            "down",
+                                            "left",
+                                            "down",
+                                            "left",
+                                            "left",
+                                            "left",
+                                            "left",
+                                            "left",
+                                            "up",
+                                            "left",
+                                            "up",
+                                            "left",
+                                            "up",
+                                            "up",
+                                            "right",
+                                            "up"
+                                        ],
+                              "steps":  47,
+                              "updated":  "2026-09-24"
+                          },
                    "3":  {
                              "moves":  [
                                            "left",
@@ -29,19 +82,6 @@
                               "steps":  5,
                               "updated":  "2026-09-19"
                           },
-                   "2":  {
-                             "moves":  [
-                                           "left",
-                                           "up",
-                                           "right",
-                                           "up",
-                                           "right",
-                                           "up",
-                                           "up"
-                                       ],
-                             "steps":  7,
-                             "updated":  "2026-09-19"
-                         },
                    "29":  {
                               "moves":  [
                                             "left",
@@ -90,8 +130,21 @@
                                            "right"
                                        ],
                              "steps":  5,
-                             "updated":  "2026-09-19"
+                             "updated":  "2026-09-24"
                          },
+                   "21":  {
+                              "moves":  [
+                                            "up",
+                                            "right",
+                                            "down",
+                                            "left",
+                                            "right",
+                                            "up",
+                                            "left"
+                                        ],
+                              "steps":  7,
+                              "updated":  "2026-09-19"
+                          },
                    "4":  {
                              "moves":  [
                                            "down",
@@ -136,18 +189,18 @@
                               "steps":  12,
                               "updated":  "2026-09-19"
                           },
-                   "21":  {
-                              "moves":  [
-                                            "up",
-                                            "right",
-                                            "down",
-                                            "left",
-                                            "right",
-                                            "up",
-                                            "left"
-                                        ],
-                              "steps":  7,
-                              "updated":  "2026-09-19"
-                          }
+                   "2":  {
+                             "moves":  [
+                                           "left",
+                                           "up",
+                                           "right",
+                                           "up",
+                                           "right",
+                                           "up",
+                                           "up"
+                                       ],
+                             "steps":  7,
+                             "updated":  "2026-09-19"
+                         }
                }
 }
